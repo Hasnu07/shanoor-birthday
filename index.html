@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Birthday Shanoor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Gochi+Hand&family=Lilita+One&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="twinkles" aria-hidden="true"></div>
+
+  <!-- ============ COVER ============ -->
+  <section id="cover" class="cover">
+    <div class="confetti" aria-hidden="true"></div>
+
+    <button class="cover-card" id="openBtn" aria-label="Open the birthday scrapbook">
+      <span class="tape tape-tl"></span>
+      <span class="tape tape-br"></span>
+
+      <div class="cover-portrait">
+        <img src="clipart/portrait.png" alt="" class="sticker-img" onerror="this.style.display='none'">
+      </div>
+
+      <h1 class="cover-title">
+        <span class="t1">happy</span>
+        <span class="t2">birthday</span>
+        <span class="t3" data-fill="name">Shanoor</span>
+      </h1>
+      <p class="cover-line hand" data-fill="coverLine"></p>
+
+      <span class="warning-label">⚠ contents are smaller than they appear</span>
+      <span class="click-me" data-fill="coverHint"></span>
+    </button>
+  </section>
+
+  <!-- ============ SCRAPBOOK ============ -->
+  <main id="book" class="book" hidden>
+
+    <div class="ribbon" aria-hidden="true"><div class="ribbon-track" id="ribbon"></div></div>
+
+    <!-- 1. Greeting page -->
+    <section class="page reveal">
+      <span class="tape tape-top"></span>
+      <div class="greet">
+        <div class="greet-text">
+          <p class="age-badge" data-fill="age"></p>
+          <h2 class="headline" id="headline"></h2>
+          <p class="hand big" data-fill="subline"></p>
+
+          <div class="candle-box">
+            <button class="candle" id="candle" aria-label="Blow out the candle">
+              <span class="flame"></span>
+              <span class="smoke"></span>
+              <span class="wick"></span>
+              <span class="wax"></span>
+              <span class="plate"></span>
+            </button>
+            <p class="hand candle-text" id="candleText"></p>
+          </div>
+        </div>
+        <div class="greet-art">
+          <div class="polaroid tilt-r">
+            <img src="photos/1.jpg" alt="" />
+            <span class="hand cap">the birthday girl (actual size)</span>
+          </div>
+          <span class="doodle star s1">★</span>
+          <span class="doodle star s2">★</span>
+          <span class="doodle spark h1">✦</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Height report + drum sticker -->
+    <section class="page reveal">
+      <div class="two-col">
+        <div class="col">
+          <div class="note lined tilt-l">
+            <span class="pin"></span>
+            <h3 class="note-title" data-fill="reportTitle"></h3>
+            <table class="report" id="report"></table>
+            <span class="stamp-ink">APPROVED ✔</span>
+          </div>
+        </div>
+        <div class="col art">
+          <figure class="sticker big-sticker">
+            <img src="clipart/drum.png" alt="Tiny Shanoor sitting in a drum" class="sticker-img" onerror="this.closest('figure').classList.add('missing')">
+            <figcaption class="hand cap-bubble">found her! she was in the drum 🥁</figcaption>
+          </figure>
+          <span class="ruler" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Sticker gallery -->
+    <section class="page reveal">
+      <span class="stamp-ink big-stamp">SMOL CERTIFIED</span>
+      <h2 class="section-title">
+        <span class="highlight">Places Shanoor fits</span>
+        <small class="hand">(tap a sticker, they're ticklish)</small>
+      </h2>
+      <div class="sticker-grid" id="stickerGrid"></div>
+    </section>
+
+    <!-- 3b. Growth experiment -->
+    <section class="page reveal lab">
+      <h2 class="section-title">
+        <span class="highlight" data-fill="labTitle"></span>
+        <small class="hand" data-fill="labNote"></small>
+      </h2>
+      <div class="two-col">
+        <div class="col art">
+          <div class="grow-stage">
+            <img src="clipart/ruler.png" alt="Tiny Shanoor next to a ruler" class="sticker-img grow-img" id="growImg" onerror="this.style.display='none'">
+            <span class="grow-msg hand" id="growMsg"></span>
+          </div>
+          <button class="btn" id="growBtn" data-fill="growButton"></button>
+          <p class="hand small-note" id="growCount"></p>
+        </div>
+        <div class="col">
+          <div class="note torn tilt-l">
+            <span class="tape tape-top small"></span>
+            <button class="btn btn-alt" id="shorterBtn" data-fill="shorterButton"></button>
+            <p class="hand shorter-out" id="shorterOut">press the button ☝️</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Taller than list + film strip -->
+    <section class="page reveal">
+      <div class="two-col">
+        <div class="col">
+          <div class="note torn tilt-r">
+            <span class="tape tape-top small"></span>
+            <h3 class="note-title" data-fill="tallerTitle"></h3>
+            <ol class="taller" id="tallerList"></ol>
+          </div>
+        </div>
+        <div class="col art">
+          <div class="film-wrap">
+            <div class="film">
+              <div class="frames" id="filmFrames"></div>
+            </div>
+            <span class="doodle star gold">★</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Real photos -->
+    <section class="page reveal">
+      <h2 class="section-title">
+        <span class="highlight" data-fill="photosTitle"></span>
+        <small class="hand" data-fill="photosNote"></small>
+      </h2>
+      <div class="polaroid-wall" id="polaroidWall"></div>
+    </section>
+
+    <!-- 5b. Video memories -->
+    <section class="page reveal">
+      <h2 class="section-title">
+        <span class="highlight" data-fill="videosTitle"></span>
+        <small class="hand" data-fill="videosNote"></small>
+      </h2>
+      <div class="video-wall" id="videoWall"></div>
+    </section>
+
+    <!-- 6. The letter -->
+    <section class="page reveal">
+      <div class="stamp-wrap">
+        <div class="stamp">
+          <span class="doodle spark red">✦</span>
+          <h3 class="note-title" data-fill="letterTitle"></h3>
+          <p class="hand letter" data-fill="letter"></p>
+          <p class="hand signoff"><span data-fill="signoff"></span><br><b data-fill="from"></b></p>
+        </div>
+
+        <figure class="sticker corner-sticker">
+          <img src="clipart/balloon.png" alt="" class="sticker-img" onerror="this.closest('figure').classList.add('missing')">
+        </figure>
+
+        <button class="cassette" id="cassette" aria-label="Play the song" title="play the song">
+          <svg viewBox="0 0 160 100" aria-hidden="true">
+            <rect x="2" y="2" width="156" height="96" rx="10" fill="#2b2b2b" stroke="#444" stroke-width="2"/>
+            <rect x="12" y="12" width="136" height="60" rx="6" fill="#f6ecd9"/>
+            <rect x="12" y="12" width="136" height="12" rx="6" fill="#e2574f"/>
+            <rect x="46" y="32" width="68" height="28" rx="14" fill="#2a2a2a"/>
+            <g class="reel reel-a"><circle cx="60" cy="46" r="10" fill="#f6ecd9" stroke="#555" stroke-width="2"/><path d="M60 38v16M52 46h16M54 40l12 12M66 40l-12 12" stroke="#555" stroke-width="1.5"/></g>
+            <g class="reel reel-b"><circle cx="100" cy="46" r="10" fill="#f6ecd9" stroke="#555" stroke-width="2"/><path d="M100 38v16M92 46h16M94 40l12 12M106 40l-12 12" stroke="#555" stroke-width="1.5"/></g>
+            <path d="M40 98 L48 78 H112 L120 98" fill="#161616"/>
+            <circle cx="30" cy="88" r="3" fill="#555"/><circle cx="130" cy="88" r="3" fill="#555"/>
+          </svg>
+          <span class="hand cm">click me!</span>
+        </button>
+      </div>
+    </section>
+
+    <footer class="foot hand" data-fill="footer"></footer>
+
+    <!-- hidden-hunt badge -->
+    <div class="hunt" id="hunt" aria-live="polite">
+      <img src="clipart/portrait.png" alt="" onerror="this.style.display='none'">
+      <span><b data-fill="huntTitle"></b>: <span id="huntCount">0</span>/3</span>
+    </div>
+  </main>
+
+  <audio id="song" loop preload="none"></audio>
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
