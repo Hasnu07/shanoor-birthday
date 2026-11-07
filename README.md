@@ -31,9 +31,10 @@ sticker captions, photo captions, the letter and the sign-off. Edit the text in 
 ## Music
 
 - `intro.mp3` — the birthday tune. Starts (with a fade-in) the moment the cover is tapped and loops.
-  The cassette at the bottom pauses and resumes it.
+- `song.mp3` — the full song on the cassette. Tapping the tape silences the tune and plays this;
+  tapping again stops it and the tune comes back. The two never play together.
 
-Set `intro: ""` in `config.js` to turn it off. Sound effects are synthesized (no files) and can be
+Set `intro: ""` or `song: ""` in `config.js` to turn either off. Sound effects are synthesized (no files) and can be
 muted with the 🔊 button or `sfx: false`.
 
 ## Put it online

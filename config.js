@@ -136,8 +136,12 @@ const CONFIG = {
   intro: "intro.mp3",
   introFadeIn: 2.5,      // seconds to fade the tune in
   introLoop: true,       // keep looping while she scrolls
-  cassetteLabel: "the only song you know 🎂 (tap to pause)",
-  cassettePaused: "tap to play it again",
+
+  // The cassette song. Tapping the tape pauses the birthday tune and plays this;
+  // tapping again pauses it and the tune comes back. Leave "" for no cassette.
+  song: "song.mp3",
+  cassetteLabel: "since you don't know the lyrics, here's the full song 🎶 (tap to play)",
+  cassettePlaying: "playing the full song · tap to pause",
 
   // Sound effects (pops, whooshes, chimes). Set false to turn them off.
   sfx: true,

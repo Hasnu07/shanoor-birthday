@@ -283,57 +283,72 @@
   function bigBurst(x, y) { burst(x, y, 24, true); }
 
   // ============================================================
-  // MUSIC — one track: the birthday tune.
-  //   starts when the site is launched (cover tap); the cassette pauses/resumes it
+  // MUSIC
+  //   intro = birthday tune: starts when the site is launched, loops
+  //   song  = the cassette: tap to play the full song (tune pauses), tap to go back
+  //   The two can never play at the same time.
   // ============================================================
   const intro = $('#intro');
+  const song = $('#song');
   const cassette = $('#cassette');
-  let introOn = false;
-  let fadeTimer = null;
+  const fades = new Map();
 
   if (CONFIG.intro) { intro.src = CONFIG.intro; intro.loop = CONFIG.introLoop !== false; }
-  else cassette.style.display = 'none';
+  if (CONFIG.song) song.src = CONFIG.song; else cassette.style.display = 'none';
 
-  function fadeTo(target, secs, then) {
-    clearInterval(fadeTimer);
+  function fadeTo(el, target, secs, then) {
+    clearInterval(fades.get(el));
     const steps = Math.max(1, Math.round(secs * 20));
-    const start = intro.volume; let n = 0;
-    fadeTimer = setInterval(() => {
-      n++; intro.volume = Math.min(1, Math.max(0, start + (target - start) * (n / steps)));
-      if (n >= steps) { clearInterval(fadeTimer); if (then) then(); }
+    const start = el.volume; let n = 0;
+    const id = setInterval(() => {
+      n++; el.volume = Math.min(1, Math.max(0, start + (target - start) * (n / steps)));
+      if (n >= steps) { clearInterval(id); if (then) then(); }
     }, 50);
+    fades.set(el, id);
   }
-  function duckSong(on) { if (introOn) fadeTo(on ? .15 : 1, .6); }
+  function hardStop(el) { clearInterval(fades.get(el)); el.pause(); el.volume = 0; }
+  function duckSong(on) {
+    [intro, song].forEach(el => { if (!el.paused) fadeTo(el, on ? .15 : 1, .6); });
+  }
+
+  // never both at once: whichever starts playing silences the other
+  intro.addEventListener('play', () => { if (!song.paused) hardStop(song); });
+  song.addEventListener('play', () => { if (!intro.paused) hardStop(intro); paintCassette(); });
+  song.addEventListener('pause', paintCassette);
 
   function paintCassette() {
-    cassette.classList.toggle('playing', introOn);
-    cassette.querySelector('.cm').textContent = introOn
-      ? (CONFIG.cassetteLabel || 'playing… (tap to pause)')
-      : (CONFIG.cassettePaused || 'tap to play');
+    const on = !song.paused;
+    cassette.classList.toggle('playing', on);
+    cassette.querySelector('.cm').textContent = on
+      ? (CONFIG.cassettePlaying || 'playing… tap to pause')
+      : (CONFIG.cassetteLabel || 'tap to play the song');
   }
   paintCassette();
 
   function launchIntro() {
-    if (!CONFIG.intro || introOn) return;
+    if (!CONFIG.intro || !intro.paused) return;
     intro.volume = 0;
-    intro.play().then(() => { introOn = true; paintCassette(); fadeTo(1, Number(CONFIG.introFadeIn) || 2); }).catch(() => { paintCassette(); });
-  }
-  function pauseIntro() {
-    if (!introOn) return;
-    introOn = false; paintCassette();
-    fadeTo(0, .6, () => intro.pause());
+    intro.play().then(() => fadeTo(intro, 1, Number(CONFIG.introFadeIn) || 2)).catch(() => {});
   }
   function resumeIntro() {
-    if (!CONFIG.intro || introOn) return;
+    if (!CONFIG.intro || !intro.paused) return;
     intro.volume = 0;
-    intro.play().then(() => { introOn = true; paintCassette(); fadeTo(1, 1); }).catch(() => {});
+    intro.play().then(() => fadeTo(intro, 1, 1)).catch(() => {});
   }
 
   cassette.addEventListener('click', () => {
     SFX.click();
-    if (introOn) pauseIntro(); else resumeIntro();
+    if (!song.paused) {
+      // back to the birthday tune
+      hardStop(song);
+      resumeIntro();
+      return;
+    }
+    hardStop(intro);
+    song.volume = 1;
+    song.play().catch(() => { cassette.querySelector('.cm').textContent = 'add song.mp3 to the folder 🎵'; });
   });
-  intro.addEventListener('error', () => { cassette.querySelector('.cm').textContent = 'add intro.mp3 to the folder 🎵'; });
+  song.addEventListener('error', () => { if (CONFIG.song) cassette.querySelector('.cm').textContent = 'add song.mp3 to the folder 🎵'; });
 
   // ============================================================
   // GUIDANCE: arrows between pages, swipe prompt, toasts, balloons
