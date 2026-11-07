@@ -131,18 +131,13 @@ const CONFIG = {
   // Footer
   footer: "made for Shanoor · 100% real, 0% tall",
 
-  // Birthday tune that starts when the site is launched (the "click me!" on the cover).
-  // Leave "" for none.
+  // The birthday tune. Starts when the site is launched (TAP ME on the cover) and loops.
+  // The cassette at the bottom pauses / resumes it. Leave "" for no music.
   intro: "intro.mp3",
   introFadeIn: 2.5,      // seconds to fade the tune in
   introLoop: true,       // keep looping while she scrolls
-
-  // The cassette song. Plays ONLY when the tape is clicked; the birthday tune
-  // pauses while it plays and comes back when the tape is paused.
-  music: "music.mp3",
-  musicStartAt: 0,       // seconds into the song to start from (e.g. 32 to skip the intro)
-  musicLabel: "the only song you know",       // text under the cassette
-  musicPlaying: "the only song you know (playing · click to pause)",
+  cassetteLabel: "the only song you know 🎂 (tap to pause)",
+  cassettePaused: "tap to play it again",
 
   // Sound effects (pops, whooshes, chimes). Set false to turn them off.
   sfx: true,
