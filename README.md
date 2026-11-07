@@ -30,8 +30,12 @@ sticker captions, photo captions, the letter and the sign-off. Edit the text in 
 
 ## Music
 
-Drop a file called `music.mp3` next to `index.html` and the cassette at the bottom plays it
-(it also tries to start when the card is opened). Set `music: ""` in `config.js` to disable.
+- `intro.mp3` — the birthday tune. Starts (with a fade-in) the moment the cover is clicked and loops.
+- `music.mp3` — the cassette song. Plays only when the tape is clicked; the birthday tune pauses
+  while it plays and comes back when the tape is paused.
+
+Set `intro: ""` or `music: ""` in `config.js` to turn either off. Sound effects are synthesized
+(no files) and can be muted with the 🔊 button or `sfx: false`.
 
 ## Put it online
 
