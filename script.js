@@ -357,6 +357,78 @@
   song.addEventListener('error', () => { if (CONFIG.music) cassette.querySelector('.cm').textContent = 'add music.mp3 to the folder 🎵'; });
 
   // ============================================================
+  // GUIDANCE: arrows between pages, swipe prompt, toasts, balloons
+  // ============================================================
+  // hand-drawn arrows between pages
+  const allPages = $$('.page');
+  allPages.forEach((pg, i) => {
+    if (i === allPages.length - 1) return;
+    const a = document.createElement('div');
+    a.className = 'down-arrow reveal ' + (i % 2 ? 'tilt-r' : 'tilt-l');
+    const phrase = CONFIG.arrowPhrases[i % CONFIG.arrowPhrases.length];
+    a.innerHTML = `<span class="hand phrase">${phrase}</span>
+      <svg viewBox="0 0 60 90" aria-hidden="true"><path d="M30 4 C 24 30, 36 50, 30 72" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><path d="M12 58 L30 80 L48 58" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    pg.insertAdjacentElement('afterend', a);
+  });
+
+  // tap badge on the first sticker card
+  const firstCard = $('.sticker-card');
+  if (firstCard) { const b = document.createElement('span'); b.className = 'tap-badge'; b.textContent = CONFIG.tapHint; firstCard.appendChild(b); }
+  // badges disappear once that thing has been tapped
+  $$('.tap-badge').forEach(b => {
+    const host = b.closest('button, .sticker-card, .btn-wrap');
+    if (host) host.addEventListener('click', () => b.classList.add('gone'), { once: true });
+  });
+
+  // swipe-down prompt
+  const scrollHint = $('#scrollHint');
+  let hintTimer = null;
+  function updateHint() {
+    if (!document.body.classList.contains('open')) return;
+    const nearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 200;
+    scrollHint.classList.toggle('show', !nearBottom);
+    scrollHint.classList.add('quiet');
+    clearTimeout(hintTimer);
+    hintTimer = setTimeout(() => scrollHint.classList.remove('quiet'), 1800);
+  }
+  window.addEventListener('scroll', updateHint, { passive: true });
+  scrollHint.addEventListener('click', () => window.scrollBy({ top: window.innerHeight * .8, behavior: 'smooth' }));
+
+  // toast
+  const toast = $('#toast');
+  let toastTimer = null;
+  function showToast(msg, ms = 3500) {
+    toast.textContent = msg; toast.classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove('show'), ms);
+  }
+
+  // drifting balloons
+  const balloons = $('#balloons');
+  const balloonColors = ['#e2574f', '#f4b942', '#7bb3a8', '#e88fb0', '#6b8fd6', '#b58cd6'];
+  function floatBalloon() {
+    if (!document.body.classList.contains('open') || document.hidden) return;
+    const b = document.createElement('i');
+    b.style.left = (Math.random() < .5 ? 2 + Math.random() * 14 : 84 + Math.random() * 12) + '%';
+    b.style.setProperty('--c', pick(balloonColors));
+    b.style.animationDuration = 9 + Math.random() * 6 + 's';
+    b.style.setProperty('--sway', (Math.random() * 40 - 20) + 'px');
+    balloons.appendChild(b);
+    b.addEventListener('animationend', () => b.remove());
+  }
+  setInterval(floatBalloon, 2600);
+
+  // little confetti when a page scrolls into view
+  const pageIo = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      pageIo.unobserve(e.target);
+      const r = e.target.getBoundingClientRect();
+      burst(r.left + r.width / 2, Math.max(60, r.top + 40), 10);
+    });
+  }, { threshold: .25 });
+  allPages.slice(1).forEach(p => pageIo.observe(p));
+
+  // ============================================================
   // COVER → LAUNCH
   // ============================================================
   const cover = $('#cover');
@@ -372,6 +444,9 @@
     SFX.pop();
     setTimeout(SFX.tada, 150);
     launchIntro();
+    setTimeout(() => { scrollHint.classList.add('show'); showToast(CONFIG.launchToast, 4000); }, 1200);
+    setTimeout(() => showToast(CONFIG.huntToast, 5000), 7000);
+    for (let i = 0; i < 4; i++) setTimeout(floatBalloon, i * 500);
   });
 
   // confetti on cover

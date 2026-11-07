@@ -33,14 +33,28 @@
       <p class="cover-line hand" data-fill="coverLine"></p>
 
       <span class="warning-label">⚠ contents are smaller than they appear</span>
-      <span class="click-me" data-fill="coverHint"></span>
+      <span class="click-me big-tap"><span data-fill="coverHint"></span> <span class="hand-icon">👆</span></span>
+      <span class="tap-ring" aria-hidden="true"></span>
     </button>
   </section>
+
+  <!-- swipe-down prompt -->
+  <div class="scroll-hint" id="scrollHint" aria-hidden="true">
+    <span class="scroll-text" data-fill="scrollHint"></span>
+    <span class="scroll-arrow">⬇</span>
+  </div>
+
+  <!-- toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- drifting balloons -->
+  <div class="balloons" id="balloons" aria-hidden="true"></div>
 
   <!-- ============ SCRAPBOOK ============ -->
   <main id="book" class="book" hidden>
 
     <div class="ribbon" aria-hidden="true"><div class="ribbon-track" id="ribbon"></div></div>
+    <div class="bunting" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
     <!-- 1. Greeting page -->
     <section class="page reveal">
@@ -53,6 +67,7 @@
 
           <div class="candle-box">
             <button class="candle" id="candle" aria-label="Blow out the candle">
+              <span class="tap-badge" data-fill="tapHint"></span>
               <span class="flame"></span>
               <span class="smoke"></span>
               <span class="wick"></span>
@@ -119,13 +134,13 @@
             <img src="clipart/ruler.png" alt="Tiny Shanoor next to a ruler" class="sticker-img grow-img" id="growImg" onerror="this.style.display='none'">
             <span class="grow-msg hand" id="growMsg"></span>
           </div>
-          <button class="btn" id="growBtn" data-fill="growButton"></button>
+          <span class="btn-wrap"><button class="btn" id="growBtn" data-fill="growButton"></button><span class="tap-badge" data-fill="tapHint"></span></span>
           <p class="hand small-note" id="growCount"></p>
         </div>
         <div class="col">
           <div class="note torn tilt-l">
             <span class="tape tape-top small"></span>
-            <button class="btn btn-alt" id="shorterBtn" data-fill="shorterButton"></button>
+            <span class="btn-wrap block"><button class="btn btn-alt" id="shorterBtn" data-fill="shorterButton"></button><span class="tap-badge" data-fill="tapHint"></span></span>
             <p class="hand shorter-out" id="shorterOut">press the button ☝️</p>
           </div>
         </div>
@@ -186,6 +201,7 @@
         </figure>
 
         <button class="cassette" id="cassette" aria-label="Play the song" title="play the song">
+          <span class="tap-badge" data-fill="tapHint"></span>
           <svg viewBox="0 0 160 100" aria-hidden="true">
             <rect x="2" y="2" width="156" height="96" rx="10" fill="#2b2b2b" stroke="#444" stroke-width="2"/>
             <rect x="12" y="12" width="136" height="60" rx="6" fill="#f6ecd9"/>

@@ -633,6 +633,128 @@ body:not(.open) .sfx-toggle { display: none; }
 .doodle.spark.red { top: -14px; right: 16px; font-size: 2.4rem; color: var(--red); }
 
 /* ============================================================
+   GUIDANCE + MORE FLAIR
+   ============================================================ */
+/* cover: big TAP ME with pointing hand + pulse ring */
+.click-me.big-tap {
+  font-family: "Lilita One", sans-serif; font-size: 1.7rem; letter-spacing: 1px;
+  color: #fff; background: var(--red);
+  padding: 10px 22px; border-radius: 40px;
+  box-shadow: 0 5px 0 #a52f29, 0 10px 20px rgba(0,0,0,.2);
+  display: inline-flex; align-items: center; gap: 8px;
+  animation: tapPulse 1.3s ease-in-out infinite;
+}
+@keyframes tapPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+.hand-icon { display: inline-block; font-size: 1.6rem; animation: pointTap 1s ease-in-out infinite; }
+@keyframes pointTap { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(8px) rotate(-10deg); } }
+.tap-ring {
+  position: absolute; left: 50%; bottom: 26px; width: 70px; height: 70px;
+  margin-left: -35px; border-radius: 50%;
+  border: 3px solid var(--red); opacity: 0; pointer-events: none;
+  animation: ring 1.6s ease-out infinite;
+}
+@keyframes ring { 0% { transform: scale(.5); opacity: .8; } 100% { transform: scale(2.4); opacity: 0; } }
+
+/* swipe-down prompt */
+.scroll-hint {
+  position: fixed; left: 50%; bottom: 18px; z-index: 45;
+  transform: translateX(-50%) translateY(30px);
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 8px 18px 6px; border-radius: 30px;
+  background: var(--red); color: #fff;
+  font-family: "Lilita One", sans-serif; font-size: 1rem; letter-spacing: .5px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.25);
+  opacity: 0; pointer-events: none;
+  transition: opacity .4s, transform .4s;
+  cursor: pointer;
+}
+.scroll-hint.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+.scroll-hint.show.quiet { opacity: .35; }
+.scroll-arrow { font-size: 1.5rem; line-height: 1; animation: bounceDown 1s ease-in-out infinite; }
+@keyframes bounceDown { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(7px); } }
+
+/* arrows between pages */
+.down-arrow {
+  display: flex; flex-direction: column; align-items: center;
+  margin: -40px auto 30px; color: var(--red);
+  width: max-content; max-width: 90%;
+}
+.down-arrow .phrase {
+  font-family: "Caveat", cursive; font-weight: 700; font-size: 1.9rem;
+  background: var(--yellow); padding: 2px 14px; border-radius: 20px;
+  transform: rotate(-3deg); box-shadow: 0 2px 0 rgba(0,0,0,.12);
+  white-space: nowrap;
+}
+.down-arrow svg { width: 54px; height: 80px; margin-top: 4px; animation: bounceDown 1.2s ease-in-out infinite; }
+
+/* tap badges */
+.btn-wrap { position: relative; display: inline-block; }
+.btn-wrap.block { display: block; }
+.tap-badge {
+  position: absolute; top: -14px; right: -16px; z-index: 4;
+  padding: 3px 9px; border-radius: 14px;
+  background: var(--yellow); color: var(--ink);
+  font-family: "Lilita One", sans-serif; font-size: .8rem; letter-spacing: .5px;
+  box-shadow: 0 2px 0 rgba(0,0,0,.15);
+  transform: rotate(10deg);
+  animation: tapPulse 1.2s ease-in-out infinite;
+  pointer-events: none;
+}
+.tap-badge.gone { display: none; }
+.candle .tap-badge { top: -24px; right: -30px; }
+.cassette .tap-badge { top: -8px; right: -6px; }
+.sticker-card .tap-badge { top: 14px; right: 6px; }
+
+/* toast */
+.toast {
+  position: fixed; left: 50%; top: 16px; z-index: 60;
+  transform: translateX(-50%) translateY(-30px);
+  max-width: min(92vw, 420px);
+  padding: 10px 18px; border-radius: 16px;
+  background: var(--ink); color: var(--white);
+  font-family: "Gochi Hand", cursive; font-size: 1.05rem; text-align: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,.3);
+  opacity: 0; pointer-events: none;
+  transition: opacity .35s, transform .35s;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* bunting */
+.bunting {
+  display: flex; justify-content: center; gap: 6px;
+  margin: -34px 0 26px; padding: 0 6px;
+  position: relative;
+}
+.bunting::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--ink-soft); opacity: .4; }
+.bunting i {
+  width: 30px; height: 36px; margin-top: 2px;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  background: var(--red);
+  animation: flagWave 2.4s ease-in-out infinite;
+  transform-origin: 50% 0;
+}
+.bunting i:nth-child(6n+2) { background: var(--yellow); }
+.bunting i:nth-child(6n+3) { background: var(--teal); }
+.bunting i:nth-child(6n+4) { background: var(--pink); }
+.bunting i:nth-child(6n+5) { background: var(--blue); }
+.bunting i:nth-child(6n+6) { background: #b58cd6; }
+.bunting i:nth-child(odd) { animation-delay: -1.2s; }
+@keyframes flagWave { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+
+/* drifting balloons */
+.balloons { position: fixed; inset: 0; pointer-events: none; z-index: 2; overflow: hidden; }
+.balloons i {
+  position: absolute; bottom: -80px;
+  width: 34px; height: 42px; border-radius: 50% 50% 50% 50% / 45% 45% 55% 55%;
+  background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.7), var(--c) 40%);
+  opacity: .85;
+  animation: rise linear forwards;
+}
+.balloons i::before { content: ""; position: absolute; left: 50%; bottom: -6px; width: 8px; height: 8px; margin-left: -4px; background: var(--c); clip-path: polygon(50% 0, 0 100%, 100% 100%); }
+.balloons i::after { content: ""; position: absolute; left: 50%; bottom: -46px; width: 1px; height: 40px; background: rgba(0,0,0,.3); }
+@keyframes rise { 0% { transform: translateY(0) translateX(0) rotate(-3deg); } 50% { transform: translateY(-55vh) translateX(var(--sway)) rotate(3deg); } 100% { transform: translateY(-115vh) translateX(0) rotate(-3deg); } }
+
+/* ============================================================
    PHONE
    ============================================================ */
 @media (max-width: 600px) {
@@ -680,6 +802,15 @@ body:not(.open) .sfx-toggle { display: none; }
   .hunt { right: 8px; bottom: 8px; font-size: .8rem; padding: 4px 10px 4px 4px; transform: none; }
   .hunt img { width: 24px; height: 24px; }
   .sfx-toggle { left: 8px; bottom: 8px; width: 36px; height: 36px; font-size: 1rem; }
+  .scroll-hint { bottom: 54px; font-size: .95rem; padding: 6px 16px 4px; }
+  .down-arrow { margin: -26px auto 18px; }
+  .down-arrow .phrase { font-size: 1.6rem; }
+  .down-arrow svg { width: 44px; height: 64px; }
+  .bunting { margin: -22px 0 18px; gap: 4px; }
+  .bunting i { width: 22px; height: 26px; }
+  .click-me.big-tap { font-size: 1.4rem; padding: 8px 18px; }
+  .balloons i { width: 26px; height: 32px; }
+  .toast { top: 10px; font-size: .95rem; }
   .tiny { width: 28px; height: 28px; }
   .cover-card { padding: 34px 20px 30px; }
   .cover-portrait { width: 180px; }

@@ -8,7 +8,22 @@ const CONFIG = {
 
   // Cover page
   coverLine: "a very small birthday card for a very small person",
-  coverHint: "click me!",
+  coverHint: "TAP ME!",
+
+  // Guidance for the easily lost
+  scrollHint: "swipe down",
+  launchToast: "scroll down 👇 there's loads more",
+  huntToast: "psst… 3 tiny Shanoors are hiding on this page. find them! 👀",
+  tapHint: "tap!",
+  arrowPhrases: [
+    "keep going ↓",
+    "more below! ↓",
+    "swipe! ↓",
+    "don't stop now ↓",
+    "you're doing great ↓",
+    "almost there ↓",
+    "last one, promise ↓",
+  ],
 
   // Scrolling ribbon at the top of the book
   ribbon: "✨ happy birthday shanoor ✨ tiny but mighty ✨ handle with care ✨ may contain small person ✨",
